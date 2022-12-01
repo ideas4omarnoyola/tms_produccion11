@@ -47,8 +47,7 @@
 
         // Audios------------------------------------------------------
         const audio = [
-            new Audio('../audios/TMS_OEA_M11_06_1.mp3'),
-            new Audio('../audios/audio0.mp3'),
+            new Audio('../audios/TMS_OEA_M11_06_1.mp3')
         ]
 
         // Al cargarse la página
@@ -58,7 +57,7 @@
         });
 
         function iniciarContenido(){
-            aplicacion.reproducirAudio(audio[1], activarVideo, 2);
+            aplicacion.reproducirAudio(audio[0], activarVideo, 2);
             animacionEntrada(texto, 'default', 1, 1);
         }
 
