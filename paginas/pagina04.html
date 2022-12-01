@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página 04</title>
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../css/estilos.css">
+
+    <!-- Librerias -->
+    <script src="../js/librerias/jquery.min.js"></script>
+    <script src="../js/librerias/gsap.min.js"></script>
+
+    <!-- Script de animaciones -->
+    <script src="../js/animaciones.js"></script>
+    <!-- Scripts posicionar elementos -->
+    <script src="../js/redimensionarElementos.js"></script>
+    <script src="../js/posicionar.js"></script>
+
+</head>
+<body class="pagina">
+    <img class="elementos" id="fondo" src="../img/pagina04/fondo.png" data-posX="0" data-posY="0" alt="">
+    <img class="elementos" id="instrucciones" src="../img/pagina04/instrucciones.png" data-posX="0" data-posY="0" alt="">
+
+    <img class="elementos" id="info1" src="../img/pagina04/info1.png" data-posX="0" data-posY="0" alt="">
+    <img class="elementos" id="info2" src="../img/pagina04/info2.png" data-posX="0" data-posY="0" alt="">
+    <img class="elementos" id="info3" src="../img/pagina04/info3.png" data-posX="0" data-posY="0" alt="">
+    <img class="elementos" id="info4" src="../img/pagina04/info4.png" data-posX="0" data-posY="0" alt="">
+
+    <img class="elementos botones" id="btn1" src="../img/pagina04/btn1.png" data-posX="56" data-posY="215" alt="">
+    <img class="elementos botones" id="btn2" src="../img/pagina04/btn2.png" data-posX="248" data-posY="215" alt="">
+    <img class="elementos botones" id="btn3" src="../img/pagina04/btn3.png" data-posX="439" data-posY="215" alt="">
+    <img class="elementos botones" id="btn4" src="../img/pagina04/btn4.png" data-posX="630" data-posY="215" alt="">
+    
+    <!-- Script de la página -->
+    <script>
+
+        // Variable----------------------------------------------------
+        let aplicacion = parent;
+
+        const instrucciones = $('#instrucciones');
+        const fondo = $('#fondo');
+
+        const btn1 = $('#btn1');
+        const btn2 = $('#btn2');
+        const btn3 = $('#btn3');
+        const btn4 = $('#btn4');
+
+        const info1 = $('#info1');
+        const info2 = $('#info2');
+        const info3 = $('#info3');
+        const info4 = $('#info4');
+
+        const botones = $('.botones');
+
+        const informacion = [info1, info2, info3, info4];
+        const btns = [btn1, btn2, btn3, btn4];
+
+        let indexInfo = 0;
+
+        // Audios------------------------------------------------------
+        const audio = [
+            new Audio('../audios/TMS_OEA_M11_04_1.mp3'),
+            new Audio('../audios/TMS_OEA_M11_04_2.mp3')
+        ]
+        const audioBotones = [
+            new Audio('../audios/TMS_OEA_M11_04_3.mp3'),
+            new Audio('../audios/TMS_OEA_M11_04_4.mp3'),
+            new Audio('../audios/TMS_OEA_M11_04_5.mp3'),
+            new Audio('../audios/TMS_OEA_M11_04_6.mp3')
+        ]
+        const audioInfo = [
+            new Audio('../audios/TMS_OEA_M11_04_7.mp3'),
+            new Audio('../audios/TMS_OEA_M11_04_8.mp3'),
+            new Audio('../audios/TMS_OEA_M11_04_9.mp3'),
+            new Audio('../audios/TMS_OEA_M11_04_10.mp3')
+        ]
+
+        // Al cargarse la página
+        $(window).on("load", function(){
+            redimensionarElementos();
+            aplicacion.cargando(iniciarContenido);
+        });
+
+        function iniciarContenido(){
+            aplicacion.reproducirAudio(audio[0], locutaInstrucciones, 1);
+            animacionEntrada(fondo, 'default', 1);
+            animacionEntrada(btn1, 'abajo-arriba', 1, 1);
+            animacionEntrada(btn2, 'abajo-arriba', 1, 1.5);
+            animacionEntrada(btn3, 'abajo-arriba', 1, 2);
+            animacionEntrada(btn4, 'abajo-arriba', 1, 2.5);
+        }
+
+        function locutaInstrucciones() {  
+            aplicacion.reproducirAudio(audio[1], botonera, 1);
+            animacionEntrada(instrucciones, 'default', 1);
+        }
+
+        
+        function botonera(){
+            parpadear(btns[indexInfo]);
+        }
+
+        botones.each(function(){
+            $(this).click(function () {  
+                if($(this).css('cursor') == 'pointer'){
+                    aplicacion.reproducirAudio(audioBotones[indexInfo], visualizarInfo, 1);
+                    
+                    dejarParpadear($(this));
+                }
+            });
+        });
+
+        function visualizarInfo(){
+            aplicacion.reproducirAudio(audioInfo[indexInfo], siguiente, 1);
+            animacionEntrada(informacion[indexInfo], 'default', 1);
+        }
+
+        function siguiente(){
+            indexInfo++;
+            if(indexInfo < informacion.length){
+                botonera();
+            }
+            else{
+                aplicacion.terminaPantalla();
+            }
+        }
+
+    </script>
+</body>
+</html>
